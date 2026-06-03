@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bengaluru AQI Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Bengaluru air quality</p>
+          <h1>AQI analysis dashboard</h1>
+        </div>
+        <div class="hero-summary" aria-label="Current selection summary">
+          <span id="rangeLabel">2015-2023</span>
+          <strong id="heroAverage">75.42</strong>
+          <small>average AQI</small>
+        </div>
+      </section>
+
+      <section class="control-band" aria-label="Dashboard controls">
+        <label>
+          <span>Year</span>
+          <select id="yearFilter"></select>
+        </label>
+        <label>
+          <span>AQI category</span>
+          <select id="categoryFilter"></select>
+        </label>
+        <label class="search-box">
+          <span>Pollutant search</span>
+          <input id="pollutantSearch" type="search" placeholder="PM10, CO, O3..." />
+        </label>
+        <button id="resetFilters" type="button">Reset</button>
+      </section>
+
+      <section class="kpi-grid" aria-label="Key AQI metrics">
+        <article>
+          <span>Records</span>
+          <strong id="recordsKpi">0</strong>
+        </article>
+        <article>
+          <span>Average AQI</span>
+          <strong id="averageKpi">0</strong>
+        </article>
+        <article>
+          <span>Highest AQI</span>
+          <strong id="maxKpi">0</strong>
+        </article>
+        <article>
+          <span>Most common</span>
+          <strong id="categoryKpi">-</strong>
+        </article>
+      </section>
+
+      <section class="tabs" aria-label="Dashboard views">
+        <button class="tab active" data-view="overview" type="button">Overview</button>
+        <button class="tab" data-view="seasonality" type="button">Seasonality</button>
+        <button class="tab" data-view="pollutants" type="button">Pollutants</button>
+        <button class="tab" data-view="records" type="button">Records</button>
+      </section>
+
+      <section id="overview" class="view active">
+        <div class="chart-grid two-col">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Monthly AQI trend</h2>
+              <span id="trendHint">Hover a point</span>
+            </div>
+            <div id="trendChart" class="chart trend-chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h2>AQI categories</h2>
+              <span>Filtered days</span>
+            </div>
+            <div id="categoryChart" class="chart bar-chart"></div>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Yearly summary</h2>
+            <span>Average, peak, and poor days</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Average AQI</th>
+                  <th>Median AQI</th>
+                  <th>Max AQI</th>
+                  <th>Poor days</th>
+                  <th>Records</th>
+                </tr>
+              </thead>
+              <tbody id="yearlyTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="seasonality" class="view">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Month by year heatmap</h2>
+            <span id="heatmapHint">Hover a cell</span>
+          </div>
+          <div id="heatmap" class="heatmap"></div>
+        </article>
+      </section>
+
+      <section id="pollutants" class="view">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Prominent pollutant labels</h2>
+            <span>Top matches</span>
+          </div>
+          <div id="pollutantChart" class="chart pollutant-chart"></div>
+        </article>
+      </section>
+
+      <section id="records" class="view">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Daily records</h2>
+            <span id="recordCount">0 rows</span>
+          </div>
+          <div class="table-wrap records-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>AQI</th>
+                  <th>Pollutant</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="tooltip" class="tooltip" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
